@@ -9,7 +9,13 @@ export const h = (tagName, attrs, children) => {
   const el = document.createElement(tagName);
   if (attrs) {
     for (const [key, value] of Object.entries(attrs)) {
-      el[key] = value;
+      if (key === "dataset" && value && typeof value === "object") {
+        for (const [dataKey, dataVal] of Object.entries(value)) {
+          el.dataset[dataKey] = dataVal == null ? "" : String(dataVal);
+        }
+      } else {
+        el[key] = value;
+      }
     }
   }
   children?.forEach((child) => el.appendChild(child));
