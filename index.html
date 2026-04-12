@@ -1,0 +1,59 @@
+<!doctype html>
+
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Stand Your Grounds</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="Bay Area ethical coffee map — curated shops on Google Maps."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="canonical" href="https://example.facerix.com/" />
+    <meta property="og:title" content="Stand Your Grounds" />
+    <meta
+      property="og:description"
+      content="Bay Area ethical coffee map — curated shops on Google Maps."
+    />
+    <meta property="og:url" content="https://example.facerix.com/" />
+    <meta property="og:type" content="website" />
+    <meta http-equiv="Content-Language" content="en" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <link rel="stylesheet" href="/main.css" type="text/css" charset="utf-8" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="modulepreload" href="/index.js" />
+  </head>
+
+  <body class="u-fill-height">
+    <header id="main-head">
+      <a href="/" class="header-identity">
+        <img id="logo" src="/favicon.svg" alt="" width="40" height="40" />
+        <h1>Stand Your Grounds</h1>
+      </a>
+    </header>
+
+    <main id="map-app" class="map-app">
+      <div id="map-error" class="map-app__error u-hidden" role="alert"></div>
+      <div
+        id="map"
+        class="map-app__canvas"
+        role="region"
+        aria-label="Coffee shops map"
+      ></div>
+      <div id="shop-popup" class="shop-popup u-hidden" aria-hidden="true"></div>
+    </main>
+
+    <footer id="main-foot">
+      A&nbsp;<a href="/about.html">Facerix</a>&nbsp;creation
+    </footer>
+
+    <update-notification></update-notification>
+    <confirmation-modal></confirmation-modal>
+  </body>
+  <script src="/index.js" type="module"></script>
+</html>

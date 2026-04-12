@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ritual-valencia",
+    "name": "Ritual Coffee Roasters",
+    "lat": 37.7614,
+    "lng": -122.4212,
+    "placeId": "ChIJwcwc8xV-j4ARjQEpLe8EBHI",
+    "summary": "Single-origin roasting; Valencia Street flagship. Listed for Bay Area map demo.",
+    "values": ["fair_trade", "direct_trade", "locally_owned"],
+    "links": [{ "label": "Website", "url": "https://www.ritualroasters.com/" }]
+  },
+  {
+    "id": "blue-bottle-ferry",
+    "name": "Blue Bottle Coffee",
+    "lat": 37.7955,
+    "lng": -122.3934,
+    "placeId": "ChIJWdzKHOGAhYARFGYIuGLTLqk",
+    "summary": "Ferry Building kiosk; example second pin with Place details.",
+    "values": ["b_corp", "locally_owned"],
+    "links": [
+      { "label": "Blue Bottle", "url": "https://bluebottlecoffee.com/" }
+    ]
+  },
+  {
+    "id": "demo-no-place",
+    "name": "Demo pin (no Place ID)",
+    "lat": 37.8044,
+    "lng": -122.2711,
+    "summary": "Curated-only popup: no Google Places block when placeId is omitted.",
+    "values": ["vegan_options", "compostable"]
+  }
+]

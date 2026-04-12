@@ -16,21 +16,21 @@ Progressive Web App: a **read-only Bay Area ethical coffee map** built on the Fa
 
 JSON **array** of objects. Required for each shop:
 
-| Field   | Type   | Description                                        |
-| ------- | ------ | -------------------------------------------------- |
-| `id`    | string | Stable id (e.g. for future favorites in DataStore) |
-| `name`  | string | Title shown in popup                               |
-| `lat`   | number | Latitude                                           |
-| `lng`   | number | Longitude                                          |
+| Field  | Type   | Description                                        |
+| ------ | ------ | -------------------------------------------------- |
+| `id`   | string | Stable id (e.g. for future favorites in DataStore) |
+| `name` | string | Title shown in popup                               |
+| `lat`  | number | Latitude                                           |
+| `lng`  | number | Longitude                                          |
 
 Optional:
 
-| Field       | Type     | Description                                                |
-| ----------- | -------- | ---------------------------------------------------------- |
-| `placeId`   | string   | Google Place ID — enables Place Details in the popup     |
-| `summary`   | string   | Your editorial blurb                                       |
-| `values`    | string[] | Tags (e.g. `fair_trade`, `b_corp`) for future filters      |
-| `links`     | object[] | `{ "label": "…", "url": "https://…" }`                     |
+| Field     | Type     | Description                                           |
+| --------- | -------- | ----------------------------------------------------- |
+| `placeId` | string   | Google Place ID — enables Place Details in the popup  |
+| `summary` | string   | Your editorial blurb                                  |
+| `values`  | string[] | Tags (e.g. `fair_trade`, `b_corp`) for future filters |
+| `links`   | object[] | `{ "label": "…", "url": "https://…" }`                |
 
 Shops missing `placeId` still appear on the map; the Google block is omitted from the popup.
 
