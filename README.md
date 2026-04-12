@@ -9,7 +9,7 @@ Progressive Web App: a **read-only Bay Area ethical coffee map** built on the Fa
 ## Setup
 
 1. `npm install`
-2. Copy `config.example.json` to **`config.json`** (gitignored) and set `googleMapsApiKey` to a browser key with **Maps JavaScript API** and **Places API** enabled. Restrict the key by HTTP referrer in Google Cloud Console.
+2. Copy `config.example.json` to **`config.json`** (gitignored) and set `googleMapsApiKey` to a browser key with **Maps JavaScript API** and **Places API (New)** enabled. Restrict the key by HTTP referrer in Google Cloud Console. Advanced markers require a [map ID](https://developers.google.com/maps/documentation/javascript/advanced-markers/overview); `shopMap.js` uses `DEMO_MAP_ID` by default—create your own in Google Cloud Console for production.
 3. `npm start` → open http://localhost:8080
 
 ## Curated shops schema (`data/shops.json`)
@@ -33,6 +33,8 @@ Optional:
 | `links`   | object[] | `{ "label": "…", "url": "https://…" }`                |
 
 Shops missing `placeId` still appear on the map; the Google block is omitted from the popup.
+
+You can find placeId using Google's [PlaceID finder](https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder) tool. Lat/lng require a little digging around Google Maps and pulling it from the URL.
 
 ## Commands
 

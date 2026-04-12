@@ -2,7 +2,7 @@
 let mapsScriptLoad = null;
 
 /**
- * Load Google Maps JavaScript API once (with Places library).
+ * Load Google Maps JavaScript API once (Places + Advanced Marker libraries).
  * With loading=async, use the callback query param — script "load" fires before Map is usable.
  * @param {string} apiKey
  * @returns {Promise<void>}
@@ -38,7 +38,7 @@ export function loadMapsScript(apiKey) {
   const params = new URLSearchParams({
     key: apiKey,
     v: "weekly",
-    libraries: "places",
+    libraries: "places,marker",
     loading: "async",
     callback: callbackName,
   });

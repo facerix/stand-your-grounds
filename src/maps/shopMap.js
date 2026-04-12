@@ -49,12 +49,13 @@ export async function initShopMap({ apiKey }) {
   const map = new google.maps.Map(mapEl, {
     center: DEFAULT_CENTER,
     zoom: DEFAULT_ZOOM,
+    mapId: "DEMO_MAP_ID",
     mapTypeControl: false,
     streetViewControl: false,
     fullscreenControl: true,
   });
 
-  const placeCache = new PlaceDetailsCache(map);
+  const placeCache = new PlaceDetailsCache();
 
   if (shops.length === 1) {
     const s = shops[0];
@@ -67,12 +68,13 @@ export async function initShopMap({ apiKey }) {
   }
 
   shops.forEach((shop) => {
-    const marker = new google.maps.Marker({
-      position: { lat: shop.lat, lng: shop.lng },
+    const marker = new google.maps.marker.AdvancedMarkerElement({
       map,
+      position: { lat: shop.lat, lng: shop.lng },
       title: shop.name,
+      gmpClickable: true,
     });
-    marker.addListener("click", () => {
+    marker.addEventListener("gmp-click", () => {
       void openShopPopup({ container: popupEl, shop, placeCache });
     });
   });
