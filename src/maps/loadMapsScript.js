@@ -1,38 +1,54 @@
+/** @type {Promise<void> | null} */
+let mapsScriptLoad = null;
+
 /**
  * Load Google Maps JavaScript API once (with Places library).
+ * With loading=async, use the callback query param — script "load" fires before Map is usable.
  * @param {string} apiKey
  * @returns {Promise<void>}
  */
+
 export function loadMapsScript(apiKey) {
   if (typeof window.google?.maps?.Map === "function") {
     return Promise.resolve();
   }
 
-  return new Promise((resolve, reject) => {
-    const existing = document.querySelector("script[data-grounds-maps]");
-    if (existing) {
-      existing.addEventListener("load", () => resolve(), { once: true });
-      existing.addEventListener(
-        "error",
-        () => reject(new Error("Failed to load Google Maps")),
-        { once: true },
-      );
-      return;
-    }
+  if (mapsScriptLoad) {
+    return mapsScriptLoad;
+  }
 
-    const script = document.createElement("script");
-    script.dataset.groundsMaps = "true";
-    script.async = true;
-    script.defer = true;
-    const params = new URLSearchParams({
-      key: apiKey,
-      v: "weekly",
-      libraries: "places",
-    });
-    script.src = `https://maps.googleapis.com/maps/api/js?${params.toString()}`;
-    script.onload = () => resolve();
-    script.onerror = () =>
-      reject(new Error("Failed to load Google Maps JavaScript API"));
-    document.head.appendChild(script);
+  let resolve;
+  let reject;
+  mapsScriptLoad = new Promise((res, rej) => {
+    resolve = res;
+    reject = rej;
   });
+
+  const callbackName = `__groundsMapsCb_${Math.random().toString(36).slice(2)}`;
+  window[callbackName] = () => {
+    delete window[callbackName];
+    mapsScriptLoad = null;
+    resolve();
+  };
+
+  const script = document.createElement("script");
+  script.dataset.groundsMaps = "true";
+  script.async = true;
+  script.defer = true;
+  const params = new URLSearchParams({
+    key: apiKey,
+    v: "weekly",
+    libraries: "places",
+    loading: "async",
+    callback: callbackName,
+  });
+  script.src = `https://maps.googleapis.com/maps/api/js?${params.toString()}`;
+  script.onerror = () => {
+    delete window[callbackName];
+    mapsScriptLoad = null;
+    reject(new Error("Failed to load Google Maps JavaScript API"));
+  };
+  document.head.appendChild(script);
+
+  return mapsScriptLoad;
 }
