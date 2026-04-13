@@ -1,5 +1,10 @@
 import { h } from "/src/domUtils.js";
 import { loadMapsScript } from "/src/maps/loadMapsScript.js";
+import {
+  fetchPlaceDetails,
+  analyzeContentForValues,
+  getValueLabel,
+} from "/src/shopDataPopulator.js";
 
 /** @type {HTMLElement | null} */
 const root = document.getElementById("manage-root");
@@ -58,26 +63,6 @@ function slugFromName(name) {
 }
 
 /**
- * @param {object} place
- * @returns {string}
- */
-function buildShopJsonStub(place) {
-  const name = displayNameToString(place.displayName);
-  const coords = coordsFromLocation(place.location);
-  const stub = {
-    id: slugFromName(name),
-    name: name || "Shop name",
-    lat: coords?.lat ?? 0,
-    lng: coords?.lng ?? 0,
-    placeId: typeof place.id === "string" ? place.id : "",
-    summary: "",
-    values: [],
-    links: [],
-  };
-  return `${JSON.stringify(stub, null, 2)},`;
-}
-
-/**
  * @param {string} text
  * @returns {Promise<void>}
  */
@@ -122,6 +107,20 @@ function validateShops(data) {
       Number.isFinite(s.lat) &&
       Number.isFinite(s.lng),
   );
+}
+
+/**
+ * Extract domain from URL for link label
+ * @param {string} url
+ * @returns {string}
+ */
+function domainFromUrl(url) {
+  try {
+    const u = new URL(url);
+    return u.hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
 }
 
 async function main() {
@@ -200,14 +199,12 @@ async function main() {
   listSection.appendChild(tableWrap);
 
   const lookupSection = h("section", { className: "manage-section" }, [
-    h("h2", {}, [
-      document.createTextNode(
-        "Look up lat / lng / placeId (Places Text Search)",
-      ),
-    ]),
+    h("h2", {}, [document.createTextNode("Add new shop (Places Text Search)")]),
     h("p", { className: "manage-msg manage-msg--hint" }, [
       document.createTextNode(
-        "Search by business name and area (e.g. “Ritual Coffee Valencia San Francisco”). Results are biased to the Bay Area. Copy a JSON stub and merge the fields into shops.json by hand.",
+        'Search by business name and area (e.g. "Ritual Coffee Valencia San Francisco"). ' +
+          "Results include Place details, suggested summary, and detected values. " +
+          "Copy the JSON stub and merge into shops.json.",
       ),
     ]),
   ]);
@@ -252,6 +249,44 @@ async function main() {
   }
 
   /**
+   * Build a complete shop JSON stub with Place details
+   * @param {object} place - Basic place from text search
+   * @param {object|null} details - Detailed place info
+   * @returns {object}
+   */
+  function buildEnrichedShopStub(place, details) {
+    const name = displayNameToString(place.displayName);
+    const coords = coordsFromLocation(place.location);
+
+    const stub = {
+      id: slugFromName(name),
+      name: name || "Shop name",
+      lat: coords?.lat ?? 0,
+      lng: coords?.lng ?? 0,
+      placeId: typeof place.id === "string" ? place.id : "",
+      summary: "",
+      values: [],
+      links: [],
+    };
+
+    if (details) {
+      const editorialText = details.editorialSummary?.text || "";
+      const contentToAnalyze = [name, editorialText].join(" ");
+      const analysis = analyzeContentForValues(contentToAnalyze);
+      stub.values = analysis.suggestedValues;
+
+      if (details.websiteURI) {
+        stub.links.push({
+          label: domainFromUrl(details.websiteURI),
+          url: details.websiteURI,
+        });
+      }
+    }
+
+    return stub;
+  }
+
+  /**
    * @param {string} query
    */
   async function runSearch(query) {
@@ -263,6 +298,8 @@ async function main() {
     }
 
     searchBtn.disabled = true;
+    searchBtn.textContent = "Searching...";
+
     try {
       const { Place } = await google.maps.importLibrary("places");
       const { LatLngBounds } = await google.maps.importLibrary("core");
@@ -301,56 +338,135 @@ async function main() {
             ? place.formattedAddress
             : "";
 
-        const jsonBlock = buildShopJsonStub(place);
-
-        const copyBtn = h(
-          "button",
-          {
-            type: "button",
-            className: "manage-result__copy",
-          },
-          [document.createTextNode("Copy shops.json stub")],
-        );
-        const copyDone = h(
-          "span",
-          {
-            className: "manage-result__copy-done",
-            hidden: true,
-          },
-          [document.createTextNode("Copied")],
-        );
-
-        copyBtn.addEventListener("click", async () => {
-          await copyToClipboard(jsonBlock);
-          copyDone.hidden = false;
-          setTimeout(() => {
-            copyDone.hidden = true;
-          }, 2000);
-        });
-
-        const latStr = coords ? String(coords.lat) : "—";
-        const lngStr = coords ? String(coords.lng) : "—";
-
-        resultsEl.appendChild(
-          h("article", { className: "manage-result" }, [
-            h("h3", {}, [document.createTextNode(name || "(no name)")]),
-            h("p", { className: "manage-result__meta" }, [
-              document.createTextNode(addr),
-            ]),
-            h("p", { className: "manage-result__meta" }, [
-              document.createTextNode(
-                `lat: ${latStr} · lng: ${lngStr} · placeId: ${pid || "—"}`,
-              ),
-            ]),
-            h("pre", { className: "manage-result__pre" }, [
-              document.createTextNode(jsonBlock),
-            ]),
-            h("div", { className: "manage-result__actions" }, [
-              copyBtn,
-              copyDone,
-            ]),
+        const resultEl = h("article", { className: "manage-result" }, [
+          h("h3", {}, [document.createTextNode(name || "(no name)")]),
+          h("p", { className: "manage-result__meta" }, [
+            document.createTextNode(addr),
           ]),
-        );
+          h("p", { className: "manage-result__meta" }, [
+            document.createTextNode(
+              `lat: ${coords?.lat ?? "—"} · lng: ${coords?.lng ?? "—"} · placeId: ${pid || "—"}`,
+            ),
+          ]),
+        ]);
+
+        const detailsContainer = h("div", {}, [
+          h("p", { className: "manage-result__meta" }, [
+            document.createTextNode("Loading details..."),
+          ]),
+        ]);
+        resultEl.appendChild(detailsContainer);
+        resultsEl.appendChild(resultEl);
+
+        fetchPlaceDetails(pid).then((details) => {
+          detailsContainer.replaceChildren();
+
+          const stub = buildEnrichedShopStub(place, details);
+
+          if (details) {
+            if (details.editorialSummary?.text) {
+              detailsContainer.appendChild(
+                h("div", { className: "manage-result__section" }, [
+                  h("div", { className: "manage-result__section-title" }, [
+                    document.createTextNode(
+                      "Google Summary (use as reference, do not copy verbatim)",
+                    ),
+                  ]),
+                  h("p", { className: "manage-result__summary-text" }, [
+                    document.createTextNode(
+                      `"${details.editorialSummary.text}"`,
+                    ),
+                  ]),
+                ]),
+              );
+            }
+
+            if (details.rating) {
+              detailsContainer.appendChild(
+                h("p", { className: "manage-result__meta" }, [
+                  document.createTextNode(
+                    `Rating: ${details.rating} (${details.userRatingCount || 0} reviews)`,
+                  ),
+                ]),
+              );
+            }
+
+            if (details.websiteURI) {
+              const link = h(
+                "a",
+                {
+                  href: details.websiteURI,
+                  target: "_blank",
+                  rel: "noopener",
+                  className: "manage-result__link",
+                },
+                [document.createTextNode(details.websiteURI)],
+              );
+              detailsContainer.appendChild(
+                h("p", { className: "manage-result__meta" }, [link]),
+              );
+            }
+          }
+
+          if (stub.values.length > 0) {
+            const valuesEl = h(
+              "div",
+              { className: "manage-result__values" },
+              stub.values.map((v) =>
+                h(
+                  "span",
+                  {
+                    className: "manage-result__value manage-result__value--new",
+                  },
+                  [document.createTextNode(getValueLabel(v))],
+                ),
+              ),
+            );
+            detailsContainer.appendChild(
+              h("div", { className: "manage-result__section" }, [
+                h("div", { className: "manage-result__section-title" }, [
+                  document.createTextNode("Detected Values"),
+                ]),
+                valuesEl,
+              ]),
+            );
+          }
+
+          const jsonBlock = JSON.stringify(stub, null, 2) + ",";
+          const copyBtn = h(
+            "button",
+            { type: "button", className: "manage-result__copy" },
+            [document.createTextNode("Copy shops.json stub")],
+          );
+          const copyDone = h(
+            "span",
+            { className: "manage-result__copy-done", hidden: true },
+            [document.createTextNode("Copied")],
+          );
+
+          copyBtn.addEventListener("click", async () => {
+            await copyToClipboard(jsonBlock);
+            copyDone.hidden = false;
+            setTimeout(() => {
+              copyDone.hidden = true;
+            }, 2000);
+          });
+
+          detailsContainer.appendChild(
+            h("div", { className: "manage-result__section" }, [
+              h("div", { className: "manage-result__section-title" }, [
+                document.createTextNode("JSON Stub"),
+              ]),
+              h("pre", { className: "manage-result__pre" }, [
+                document.createTextNode(jsonBlock),
+              ]),
+              h("div", { className: "manage-result__actions" }, [
+                copyBtn,
+                copyDone,
+              ]),
+            ]),
+          );
+        });
       }
     } catch (err) {
       console.error("[manage-data] search", err);
@@ -361,6 +477,7 @@ async function main() {
       );
     } finally {
       searchBtn.disabled = false;
+      searchBtn.textContent = "Search";
     }
   }
 

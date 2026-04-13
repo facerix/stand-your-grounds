@@ -2,13 +2,16 @@
   "name": "stand-your-grounds",
   "version": "1.0.0",
   "description": "Stand Your Grounds — Bay Area ethical coffee map PWA",
+  "type": "module",
   "main": "index.html",
   "scripts": {
     "start": "live-server --no-browser --port=3000",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "populate": "node scripts/populate-shop-data.js --dry-run",
+    "populate:write": "node scripts/populate-shop-data.js"
   },
   "author": "Rylee Corradini",
   "license": "GPL-3.0",
