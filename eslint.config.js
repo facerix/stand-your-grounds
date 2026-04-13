@@ -21,7 +21,9 @@ export default [
         CustomEvent: "readonly",
         EventTarget: "readonly",
         HTMLElement: "readonly",
+        HTMLInputElement: "readonly",
         Element: "readonly",
+        Event: "readonly",
         Node: "readonly",
         // Service Worker globals
         self: "readonly",

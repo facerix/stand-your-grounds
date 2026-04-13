@@ -140,24 +140,13 @@ export async function initShopMap({ apiKey }) {
     }
   });
 
-  const favoritesFilterWrap = h(
-    "label",
-    { className: "map-app__favorites-filter" },
-    [],
-  );
-  const favoritesCheckbox = h("input", { type: "checkbox" });
-  favoritesFilterWrap.appendChild(favoritesCheckbox);
-  favoritesFilterWrap.appendChild(document.createTextNode(" Favorites only"));
-
-  favoritesCheckbox.addEventListener("change", () => {
-    showOnlyFavorites = favoritesCheckbox.checked;
-    updateMarkerVisibility();
-    hideShopPopup(popupEl);
-  });
-
-  const header = document.getElementById("main-head");
-  if (header) {
-    header.appendChild(favoritesFilterWrap);
+  const favoritesCheckbox = document.getElementById("map-favorites-only");
+  if (favoritesCheckbox instanceof HTMLInputElement) {
+    favoritesCheckbox.addEventListener("change", () => {
+      showOnlyFavorites = favoritesCheckbox.checked;
+      updateMarkerVisibility();
+      hideShopPopup(popupEl);
+    });
   }
 
   /** @type {google.maps.marker.AdvancedMarkerElement | null} */

@@ -39,14 +39,24 @@
         height="40"
       />
       <h1>Stand Your Grounds</h1>
-      <a
-        href="mailto:hello@facerix.com?subject=Stand%20Your%20Grounds%3A%20Shop%20suggestion"
-        class="btn"
-        title="Email a shop suggestion"
-      >
-        <img src="/images/email.svg" alt="Email icon" width="32" height="32" />
-        Suggest a shop
-      </a>
+      <burger-menu>
+        <div class="burger-menu__item">
+          <a
+            href="mailto:hello@facerix.com?subject=Stand%20Your%20Grounds%3A%20Shop%20suggestion"
+            class="btn burger-menu__suggest"
+            title="Email a shop suggestion"
+          >
+            <img src="/images/email.svg" alt="" width="24" height="24" />
+            Suggest a shop
+          </a>
+        </div>
+        <div class="burger-menu__item">
+          <label class="map-app__favorites-filter" for="map-favorites-only">
+            <input type="checkbox" id="map-favorites-only" />
+            Favorites only
+          </label>
+        </div>
+      </burger-menu>
     </header>
 
     <main id="map-app" class="map-app">
@@ -66,7 +76,6 @@
     </footer>
 
     <update-notification></update-notification>
-    <confirmation-modal></confirmation-modal>
   </body>
   <script src="/index.js" type="module"></script>
 </html>

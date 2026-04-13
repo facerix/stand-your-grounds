@@ -1,4 +1,4 @@
-import "/components/ConfirmationModal.js";
+import "/components/BurgerMenu.js";
 import "/components/UpdateNotification.js";
 
 import DataStore from "/src/DataStore.js";

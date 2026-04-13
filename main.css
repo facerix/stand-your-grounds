@@ -75,6 +75,15 @@ header#main-head {
   border-bottom: 1px solid var(--accent-color);
 }
 
+#main-head h1 {
+  margin-right: 0;
+}
+
+#main-head burger-menu {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
 h1,
 h2,
 h3,
@@ -589,12 +598,19 @@ a.btn {
   }
 }
 
-/* Map header: default .btn hover uses accent + lilac wash — poor contrast on #3d2914 */
-#main-head a.btn:hover,
-#main-head a.btn:focus-visible {
-  outline: 2px solid rgba(245, 230, 211, 0.7);
+/* Map header menu: suggest link (panel matches header brown; gold link reads clearly) */
+burger-menu .burger-menu__list a.btn {
+  justify-content: flex-start;
+  width: 100%;
+  color: #f0c96a;
+  text-align: left;
+}
+
+burger-menu .burger-menu__list a.btn:hover,
+burger-menu .burger-menu__list a.btn:focus-visible {
+  outline: 2px solid rgba(245, 230, 211, 0.55);
   outline-offset: 2px;
-  background-color: rgba(240, 201, 106, 0.2);
+  background-color: rgba(240, 201, 106, 0.15);
 }
 
 .map-app__favorites-filter {
@@ -683,12 +699,7 @@ dialog::backdrop {
 
 /* responsive design tweaks (breakpoints adopted from Bootstrap) */
 
-/* Map page only: hide #logo below tablet (#main-head; about page keeps its header img) */
 @media (max-width: 767px) {
-  #main-head > img {
-    display: none;
-  }
-
   header#main-head {
     flex-wrap: wrap;
     justify-content: center;
@@ -701,7 +712,7 @@ dialog::backdrop {
 
   #main-head h1 {
     display: block;
-    flex: 1 1 100%;
+    flex: 1 1 auto;
     margin-right: 0;
     min-width: 0;
     font-size: clamp(0.95rem, 4.2vw, 1.2rem);
@@ -710,22 +721,18 @@ dialog::backdrop {
     text-align: center;
   }
 
-  #main-head .btn {
-    flex: 0 0 auto;
-    margin-inline: auto;
-    max-width: 100%;
-    padding: 0.45em 0.85em;
+  burger-menu .burger-menu__list a.btn {
+    padding: 0.45em 0.65em;
     font-size: 0.8125rem;
     line-height: 1.25;
-    text-align: center;
     white-space: normal;
     word-break: break-word;
   }
 
-  .map-app__favorites-filter {
-    margin-right: 0;
-    padding: 0.35em 0.65em;
+  burger-menu .burger-menu__list .map-app__favorites-filter {
+    padding: 0.35em 0.55em;
     font-size: 0.8125rem;
+    white-space: normal;
   }
 
   main.map-app {
