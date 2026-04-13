@@ -6,7 +6,7 @@
     "lng": -122.4312624,
     "placeId": "ChIJfeCRkBR-j4AR_hD9mE9Chtw",
     "summary": "Original location of Martha & Bros. Coffee Co., a family-owned coffee shop in Noe Valley.",
-    "values": ["fair_trade", "direct_trade", "locally_owned"],
+    "values": ["locally_owned", "small_business"],
     "links": [
       {
         "label": "marthabros.com",
@@ -21,7 +21,7 @@
     "lng": -122.4292813,
     "placeId": "ChIJu0OEKmp-j4AR18iMt8X_GtE",
     "summary": "Church Street location of a local family-owned coffee shop.",
-    "values": ["b_corp", "locally_owned"],
+    "values": ["locally_owned", "small_business"],
     "links": [
       {
         "label": "marthabros.com",
@@ -51,7 +51,7 @@
     "lng": -122.4352428,
     "placeId": "ChIJIwGPyxp-j4ARaAv8glHW8q4",
     "summary": "",
-    "values": [],
+    "values": ["lgbtq_friendly", "locally_owned", "small_business"],
     "links": [
       { "label": "spikescoffee.com", "url": "https://spikescoffee.com/" }
     ]

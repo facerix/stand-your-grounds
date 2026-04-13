@@ -321,9 +321,20 @@ main {
 }
 
 .shop-popup__values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
   margin: 0 0 10px;
-  padding-left: 1.25rem;
-  font-size: 0.875rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+}
+
+.shop-popup__value {
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--clr-accent-bg, #f0ebe3);
+  white-space: nowrap;
 }
 
 .shop-popup__links {

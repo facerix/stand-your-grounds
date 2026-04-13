@@ -1,4 +1,7 @@
 import { h } from "/src/domUtils.js";
+import { VALUES } from "/src/values.js";
+
+const valueLabelMap = new Map(VALUES.map((v) => [v.value, v.label]));
 
 /** @param {string} s */
 function text(s) {
@@ -17,7 +20,11 @@ function buildCuratedSection(shop, onBackdropClick, onClose) {
       ? h(
           "ul",
           { className: "shop-popup__values" },
-          shop.values.map((v) => h("li", {}, [text(String(v))])),
+          shop.values.map((v) =>
+            h("li", { className: "shop-popup__value" }, [
+              text(valueLabelMap.get(v) || String(v)),
+            ]),
+          ),
         )
       : null;
 
