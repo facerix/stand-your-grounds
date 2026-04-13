@@ -17,8 +17,8 @@
   {
     "id": "marthas-church",
     "name": "Martha & Bros. Coffee Co.",
-    "lat": 37.7460132,
-    "lng": -122.4292813,
+    "lat": 37.7460169,
+    "lng": -122.4267647,
     "placeId": "ChIJu0OEKmp-j4AR18iMt8X_GtE",
     "summary": "Church Street location of a local family-owned coffee shop.",
     "values": ["locally_owned", "small_business"],
@@ -45,12 +45,24 @@
     ]
   },
   {
+    "id": "la-lucha-coffee-bar",
+    "name": "La Lucha Coffee Bar",
+    "lat": 37.7436575,
+    "lng": -122.4290966,
+    "placeId": "ChIJ2WqlLZR_j4ARjKmH5t32AXw",
+    "summary": "Cozy neighborhood coffee shop on a slow street. Good coffee, tasty bites, chill vibes.",
+    "values": ["lgbtq_friendly", "locally_owned", "small_business", "vegetarian_friendly"],
+    "links": [
+      { "label": "@laluchacoffee", "url": "https://www.instagram.com/laluchacoffee/" }
+    ]
+  },
+  {
     "id": "spikes-coffees-and-teas",
     "name": "Spike's Coffees and Teas",
     "lat": 37.7591616,
     "lng": -122.4352428,
     "placeId": "ChIJIwGPyxp-j4ARaAv8glHW8q4",
-    "summary": "",
+    "summary": "Eco-friendly, gay-owned neighborhood coffee shop with outdoor seating & an assortment of baked goods.",
     "values": ["lgbtq_friendly", "locally_owned", "small_business"],
     "links": [
       { "label": "spikescoffee.com", "url": "https://spikescoffee.com/" }
