@@ -8,6 +8,8 @@ const DEFAULT_CENTER = { lat: 37.75, lng: -122.35 };
 const DEFAULT_ZOOM = 10;
 const NEARBY_ZOOM = 16;
 const GEO_TIMEOUT_MS = 12_000;
+/** PinElement scale; default (1) is tight on touch screens — ~1.5 tracks WCAG ~44px targets. */
+const SHOP_MARKER_PIN_SCALE = 1.5;
 
 /**
  * @param {GeolocationPositionError} err
@@ -100,9 +102,16 @@ export async function initShopMap({ apiKey }) {
   const markersByShopId = new Map();
 
   shops.forEach((shop) => {
+    const pin = new google.maps.marker.PinElement({
+      background: "#b4532a",
+      borderColor: "#7a3519",
+      glyphColor: "#fff5e6",
+      scale: SHOP_MARKER_PIN_SCALE,
+    });
     const marker = new google.maps.marker.AdvancedMarkerElement({
       map,
       position: { lat: shop.lat, lng: shop.lng },
+      content: pin.element,
       title: shop.name,
       gmpClickable: true,
     });

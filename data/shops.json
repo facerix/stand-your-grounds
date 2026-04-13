@@ -51,9 +51,17 @@
     "lng": -122.4290966,
     "placeId": "ChIJ2WqlLZR_j4ARjKmH5t32AXw",
     "summary": "Cozy neighborhood coffee shop on a slow street. Good coffee, tasty bites, chill vibes.",
-    "values": ["lgbtq_friendly", "locally_owned", "small_business", "vegetarian_friendly"],
+    "values": [
+      "lgbtq_friendly",
+      "locally_owned",
+      "small_business",
+      "vegetarian_friendly"
+    ],
     "links": [
-      { "label": "@laluchacoffee", "url": "https://www.instagram.com/laluchacoffee/" }
+      {
+        "label": "@laluchacoffee",
+        "url": "https://www.instagram.com/laluchacoffee/"
+      }
     ]
   },
   {
