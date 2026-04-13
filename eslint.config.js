@@ -103,7 +103,7 @@ module.exports = [
     },
   },
   {
-    files: ["src/maps/**/*.js"],
+    files: ["src/maps/**/*.js", "manage-data.js"],
     languageOptions: {
       globals: {
         google: "readonly",

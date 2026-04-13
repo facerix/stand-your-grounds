@@ -7,7 +7,12 @@
     "placeId": "ChIJfeCRkBR-j4AR_hD9mE9Chtw",
     "summary": "Original location of Martha & Bros. Coffee Co., a family-owned coffee shop in Noe Valley.",
     "values": ["fair_trade", "direct_trade", "locally_owned"],
-    "links": [{ "label": "marthabros.com", "url": "https://www.marthabros.com/noe-valley" }]
+    "links": [
+      {
+        "label": "marthabros.com",
+        "url": "https://www.marthabros.com/noe-valley"
+      }
+    ]
   },
   {
     "id": "marthas-church",
@@ -17,7 +22,12 @@
     "placeId": "ChIJu0OEKmp-j4AR18iMt8X_GtE",
     "summary": "Church Street location of a local family-owned coffee shop.",
     "values": ["b_corp", "locally_owned"],
-    "links": [{ "label": "marthabros.com", "url": "https://www.marthabros.com/noe-valley-2" }]
+    "links": [
+      {
+        "label": "marthabros.com",
+        "url": "https://www.marthabros.com/noe-valley-2"
+      }
+    ]
   },
   {
     "id": "marthas-bernal",
@@ -27,6 +37,141 @@
     "placeId": "ChIJG4BfvVl-j4ARigns2HVOXOM",
     "summary": "Bernal Heights location of a local family-owned coffee shop.",
     "values": ["b_corp", "locally_owned"],
-    "links": [{ "label": "marthabros.com", "url": "https://www.marthabros.com/bernal-heights" }]
+    "links": [
+      {
+        "label": "marthabros.com",
+        "url": "https://www.marthabros.com/bernal-heights"
+      }
+    ]
+  },
+  {
+    "id": "spikes-coffees-and-teas",
+    "name": "Spike's Coffees and Teas",
+    "lat": 37.7591616,
+    "lng": -122.4352428,
+    "placeId": "ChIJIwGPyxp-j4ARaAv8glHW8q4",
+    "summary": "",
+    "values": [],
+    "links": [
+      { "label": "spikescoffee.com", "url": "https://spikescoffee.com/" }
+    ]
+  },
+  {
+    "id": "andytown-coffee-roasters",
+    "name": "Andytown Coffee Roasters",
+    "lat": 37.7639786,
+    "lng": -122.41265870000001,
+    "placeId": "ChIJWQe5ev9_j4ARzeiwS1Z2H5E",
+    "summary": "",
+    "values": [],
+    "links": [{ "label": "andytownsf.com/", "url": "https://andytownsf.com/" }]
+  },
+  {
+    "id": "andytown-outer-sunset",
+    "name": "Andytown Coffee Roasters",
+    "lat": 37.7566712,
+    "lng": -122.50231470000001,
+    "placeId": "ChIJee4DupqHhYARXadb2DlBtr8",
+    "summary": "",
+    "values": [],
+    "links": [{ "label": "andytownsf.com/", "url": "https://andytownsf.com/" }]
+  },
+  {
+    "id": "andytown-embarcadero",
+    "name": "Andytown Coffee Roasters",
+    "lat": 37.789742600000004,
+    "lng": -122.3953098,
+    "placeId": "ChIJZTx2MVOBhYARcUzH3cTQN7I",
+    "summary": "",
+    "values": [],
+    "links": [{ "label": "andytownsf.com/", "url": "https://andytownsf.com/" }]
+  },
+  {
+    "id": "andytown-richmond",
+    "name": "Andytown Coffee Roasters",
+    "lat": 37.772769,
+    "lng": -122.5106982,
+    "placeId": "ChIJIWto0vGHhYAR1koqXLM7-Io",
+    "summary": "",
+    "values": [],
+    "links": [{ "label": "andytownsf.com/", "url": "https://andytownsf.com/" }]
+  },
+  {
+    "id": "andytown-sunset-south",
+    "name": "Andytown Coffee Roasters",
+    "lat": 37.7416268,
+    "lng": -122.5051901,
+    "placeId": "ChIJyQd9b2N9j4ARU0bf2M8oyAk",
+    "summary": "",
+    "values": [],
+    "links": [{ "label": "andytownsf.com/", "url": "https://andytownsf.com/" }]
+  },
+  {
+    "id": "andytown-north-beach",
+    "name": "Andytown Coffee Roasters",
+    "lat": 37.7983111,
+    "lng": -122.3999535,
+    "placeId": "ChIJi7zRBSKBhYARDBE08ZVsLq0",
+    "summary": "",
+    "values": [],
+    "links": [{ "label": "andytownsf.com/", "url": "https://andytownsf.com/" }]
+  },
+  {
+    "id": "andytown-glen-park",
+    "name": "Andytown Coffee Roasters",
+    "lat": 37.7340832,
+    "lng": -122.4336521,
+    "placeId": "ChIJLUki9b1_j4AROgJvYw51QKo",
+    "summary": "",
+    "values": [],
+    "links": [{ "label": "andytownsf.com/", "url": "https://andytownsf.com/" }]
+  },
+  {
+    "id": "flywheel-coffee-roasters",
+    "name": "Flywheel Coffee Roasters",
+    "lat": 37.7696901,
+    "lng": -122.4534936,
+    "placeId": "ChIJdam9at-HhYAReFFog6hjhdo",
+    "summary": "",
+    "values": [],
+    "links": [
+      { "label": "flywheelcoffee.com", "url": "https://flywheelcoffee.com/" }
+    ]
+  },
+  {
+    "id": "sightglass-coffee",
+    "name": "Sightglass Coffee",
+    "lat": 37.7592345,
+    "lng": -122.41131709999998,
+    "placeId": "ChIJH3-XPzd-j4ARxc5pUq9X8CU",
+    "summary": "",
+    "values": [],
+    "links": [
+      { "label": "sightglasscoffee.com", "url": "https://sightglasscoffee.com/" }
+    ]
+  },
+  {
+    "id": "sightglass-soma",
+    "name": "Sightglass Coffee",
+    "lat": 37.7770356,
+    "lng": -122.40845429999997,
+    "placeId": "ChIJf-V9OIKAhYARu8bBG2S6RME",
+    "summary": "",
+    "values": [],
+    "links": [
+      { "label": "sightglasscoffee.com", "url": "https://sightglasscoffee.com/" }
+    ]
+  },
+  {
+    "id": "sightglass-divisadero",
+    "name": "Sightglass Coffee",
+    "lat": 37.772317199999996,
+    "lng": -122.43748769999999,
+    "placeId": "ChIJ0ZnTPK-AhYARbVoaoZLrzv8",
+    "summary": "",
+    "values": [],
+    "links": [
+      { "label": "sightglasscoffee.com", "url": "https://sightglasscoffee.com/" }
+    ]
   }
 ]

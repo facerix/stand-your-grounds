@@ -37,16 +37,24 @@ header {
   height: 50px;
   display: flex;
   align-items: center;
+  background: #3d2914;
+  color: #f5e6d3;
 
   img {
     max-height: 40px;
-    margin-right: 0.5em;
+    margin: 0 0.5em;
   }
 
   h1 {
     flex: 1;
     margin-right: 50px;
     text-align: center;
+  }
+
+  a,
+  a:visited {
+    color: #f0c96a;
+    text-decoration: underline;
   }
 }
 
@@ -56,22 +64,15 @@ header#main-head {
   border-bottom: 1px solid var(--accent-color);
 }
 
-.header-identity {
-  text-decoration: none;
-  color: inherit;
-
-  h1 {
-    font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
-    font-size: 24px;
-  }
-}
-
 h1,
 h2,
 h3,
 h4 {
-  font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
-  font-variant: common-ligatures small-caps;
+  font-family:
+    Futura, "Century Gothic", "Trebuchet MS", "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  font-weight: 700;
+  font-variant: normal;
 }
 
 #main-head > * {
@@ -297,7 +298,7 @@ main {
 }
 
 .btn,
-button,
+button.image-btn,
 input[type="file"]::file-selector-button {
   display: flex;
   align-items: center;
