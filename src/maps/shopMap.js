@@ -2,6 +2,7 @@ import { h } from "/src/domUtils.js";
 import { loadMapsScript } from "/src/maps/loadMapsScript.js";
 import { PlaceDetailsCache } from "/src/maps/placeDetailsCache.js";
 import { hideShopPopup, openShopPopup } from "/src/maps/shopPopup.js";
+import DataStore from "/src/DataStore.js";
 
 const DEFAULT_CENTER = { lat: 37.75, lng: -122.35 };
 const DEFAULT_ZOOM = 10;
@@ -95,6 +96,9 @@ export async function initShopMap({ apiKey }) {
     map.fitBounds(bounds, { top: 56, right: 48, bottom: 160, left: 48 });
   }
 
+  /** @type {Map<string, google.maps.marker.AdvancedMarkerElement>} */
+  const markersByShopId = new Map();
+
   shops.forEach((shop) => {
     const marker = new google.maps.marker.AdvancedMarkerElement({
       map,
@@ -105,7 +109,47 @@ export async function initShopMap({ apiKey }) {
     marker.addEventListener("gmp-click", () => {
       void openShopPopup({ container: popupEl, shop, placeCache });
     });
+    markersByShopId.set(shop.id, marker);
   });
+
+  let showOnlyFavorites = false;
+
+  function updateMarkerVisibility() {
+    const favoriteIds = new Set(DataStore.favoriteShopIds);
+    markersByShopId.forEach((marker, shopId) => {
+      if (showOnlyFavorites) {
+        marker.map = favoriteIds.has(shopId) ? map : null;
+      } else {
+        marker.map = map;
+      }
+    });
+  }
+
+  DataStore.addEventListener("favoritesChange", () => {
+    if (showOnlyFavorites) {
+      updateMarkerVisibility();
+    }
+  });
+
+  const favoritesFilterWrap = h(
+    "label",
+    { className: "map-app__favorites-filter" },
+    [],
+  );
+  const favoritesCheckbox = h("input", { type: "checkbox" });
+  favoritesFilterWrap.appendChild(favoritesCheckbox);
+  favoritesFilterWrap.appendChild(document.createTextNode(" Favorites only"));
+
+  favoritesCheckbox.addEventListener("change", () => {
+    showOnlyFavorites = favoritesCheckbox.checked;
+    updateMarkerVisibility();
+    hideShopPopup(popupEl);
+  });
+
+  const header = document.getElementById("main-head");
+  if (header) {
+    header.appendChild(favoritesFilterWrap);
+  }
 
   /** @type {google.maps.marker.AdvancedMarkerElement | null} */
   let userMarker = null;

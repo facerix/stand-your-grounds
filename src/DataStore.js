@@ -2,10 +2,13 @@
 
 import { v4WithTimestamp } from "./uuid.js";
 
+const FAVORITES_KEY = "favoriteShopIds";
+
 let instance;
 class DataStore extends EventTarget {
   #items = [];
   #itemsById = new Map();
+  #favoriteShopIds = new Set();
 
   constructor() {
     if (instance) {
@@ -53,6 +56,8 @@ class DataStore extends EventTarget {
     }
     this.#items = this.#loadRecordsFromJson(savedItemsJson);
     this.#reindex();
+
+    this.#loadFavorites();
 
     setTimeout(() => {
       this.#emitChangeEvent("init", ["*"]);
@@ -122,6 +127,74 @@ class DataStore extends EventTarget {
       this.#reindex();
       this.#emitChangeEvent("delete", [id]);
     }
+  }
+
+  #loadFavorites() {
+    try {
+      const stored = window.localStorage.getItem(FAVORITES_KEY);
+      if (stored) {
+        const arr = JSON.parse(stored);
+        if (Array.isArray(arr)) {
+          this.#favoriteShopIds = new Set(
+            arr.filter((id) => typeof id === "string"),
+          );
+        }
+      }
+    } catch (e) {
+      console.warn("[DataStore] Failed to load favorites", e);
+      this.#favoriteShopIds = new Set();
+    }
+  }
+
+  #saveFavorites() {
+    try {
+      window.localStorage.setItem(
+        FAVORITES_KEY,
+        JSON.stringify([...this.#favoriteShopIds]),
+      );
+    } catch (e) {
+      console.warn("[DataStore] Failed to save favorites", e);
+    }
+  }
+
+  #emitFavoritesChangeEvent() {
+    const changeEvent = new CustomEvent("favoritesChange", {
+      detail: { favoriteShopIds: [...this.#favoriteShopIds] },
+    });
+    this.dispatchEvent(changeEvent);
+  }
+
+  get favoriteShopIds() {
+    return [...this.#favoriteShopIds];
+  }
+
+  isFavorite(shopId) {
+    return this.#favoriteShopIds.has(shopId);
+  }
+
+  addFavorite(shopId) {
+    if (!this.#favoriteShopIds.has(shopId)) {
+      this.#favoriteShopIds.add(shopId);
+      this.#saveFavorites();
+      this.#emitFavoritesChangeEvent();
+    }
+  }
+
+  removeFavorite(shopId) {
+    if (this.#favoriteShopIds.has(shopId)) {
+      this.#favoriteShopIds.delete(shopId);
+      this.#saveFavorites();
+      this.#emitFavoritesChangeEvent();
+    }
+  }
+
+  toggleFavorite(shopId) {
+    if (this.#favoriteShopIds.has(shopId)) {
+      this.removeFavorite(shopId);
+    } else {
+      this.addFavorite(shopId);
+    }
+    return this.#favoriteShopIds.has(shopId);
   }
 }
 

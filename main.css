@@ -225,6 +225,11 @@ main {
   font-variant: normal;
   font-weight: 600;
   font-size: 0.9rem;
+
+  &:not(:disabled):hover,
+  &:not(:disabled):focus-visible {
+    background-color: #f0e0e4;
+  }
 }
 
 .map-app__geo-status {
@@ -306,10 +311,51 @@ main {
   outline-offset: 2px;
 }
 
-.shop-popup__title {
+.shop-popup__title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   margin: 0 44px 8px 0;
+}
+
+.shop-popup__title {
+  margin: 0;
   font-size: 1.25rem;
-  line-height: 1.2;
+  line-height: 1.75;
+}
+
+.shop-popup__favorite {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #6b4c30;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.shop-popup__favorite:hover {
+  color: #e53935;
+  transform: scale(1.1);
+}
+
+.shop-popup__favorite:focus-visible {
+  outline: var(--accent-color) auto 2px;
+  outline-offset: 2px;
+}
+
+.shop-popup__favorite--active {
+  color: #e53935;
+}
+
+.shop-popup__favorite-icon {
+  width: 100%;
+  height: 100%;
 }
 
 .shop-popup__summary {
@@ -551,6 +597,34 @@ a.btn {
   background-color: rgba(240, 201, 106, 0.2);
 }
 
+.map-app__favorites-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.35em 0.8em;
+  margin-right: max(8px, env(safe-area-inset-right, 0px));
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #f5e6d3;
+  font-size: 0.875rem;
+  font-variant: common-ligatures small-caps;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.map-app__favorites-filter:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.map-app__favorites-filter input[type="checkbox"] {
+  width: 1em;
+  height: 1em;
+  margin: 0;
+  accent-color: var(--accent-color);
+  cursor: pointer;
+}
+
 a:focus-visible {
   outline: var(--accent-color) auto 1px;
 }
@@ -646,6 +720,12 @@ dialog::backdrop {
     text-align: center;
     white-space: normal;
     word-break: break-word;
+  }
+
+  .map-app__favorites-filter {
+    margin-right: 0;
+    padding: 0.35em 0.65em;
+    font-size: 0.8125rem;
   }
 
   main.map-app {
