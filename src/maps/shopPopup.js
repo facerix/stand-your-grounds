@@ -8,6 +8,148 @@ function text(s) {
   return document.createTextNode(s);
 }
 
+/** @param {{ hour: number, minute: number }} point → minutes since midnight */
+function pointToMinutes(point) {
+  return point.hour * 60 + point.minute;
+}
+
+const SOON_THRESHOLD_MIN = 30;
+const DAY_NAMES = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+/** @param {{ hour: number, minute: number }} point → "7am" / "7:30pm" */
+function formatPoint(point) {
+  const suffix = point.hour >= 12 ? "pm" : "am";
+  const h12 = point.hour % 12 || 12;
+  return point.minute === 0
+    ? `${h12}${suffix}`
+    : `${h12}:${String(point.minute).padStart(2, "0")}${suffix}`;
+}
+
+/**
+ * Scan all periods to find the soonest opening after the current moment,
+ * skipping same-day entries (today is already over).
+ *
+ * @param {Array} periods  each { open: {day,hour,minute}, close?: {day,hour,minute} }
+ * @param {number} jsDay   0-Sun … 6-Sat
+ * @returns {string|null}  e.g. "Opens tomorrow at 7am"
+ */
+function findNextOpen(periods, jsDay) {
+  let best = null;
+  for (const p of periods) {
+    if (!p.open) continue;
+    const daysAhead = (p.open.day - jsDay + 7) % 7 || 7;
+    const oMin = pointToMinutes(p.open);
+    if (
+      !best ||
+      daysAhead < best.daysAhead ||
+      (daysAhead === best.daysAhead && oMin < best.oMin)
+    ) {
+      best = { daysAhead, oMin, open: p.open };
+    }
+  }
+  if (!best) return null;
+  const t = formatPoint(best.open);
+  if (best.daysAhead === 1) return `Opens tomorrow at ${t}`;
+  return `Opens ${DAY_NAMES[best.open.day]} at ${t}`;
+}
+
+/**
+ * Derive today's hours text and an open/closed/soon status from the
+ * Google Places `opening_hours` object.
+ *
+ * @param {object} oh - place.opening_hours
+ * @returns {{ todayText: string, status: string, statusClass: string, nextOpen: string|null }}
+ */
+function getTodayHoursInfo(oh) {
+  const now = new Date();
+  const jsDay = now.getDay(); // 0 = Sun … 6 = Sat
+  const curMin = now.getHours() * 60 + now.getMinutes();
+
+  // weekday_text is Mon(0)…Sun(6); JS day 0 = Sun → index 6
+  const todayLine = oh.weekday_text?.[(jsDay + 6) % 7];
+  const todayText = todayLine
+    ? todayLine.replace(/^\w+:\s*/, "")
+    : "Hours unavailable";
+
+  const periods = oh.periods;
+  if (!Array.isArray(periods) || periods.length === 0) {
+    return {
+      todayText,
+      status: "Closed",
+      statusClass: "closed",
+      nextOpen: null,
+    };
+  }
+
+  // Single period with no close → open 24 h
+  if (periods.length === 1 && !periods[0].close) {
+    return {
+      todayText: "Open 24 hours",
+      status: "Open",
+      statusClass: "open",
+      nextOpen: null,
+    };
+  }
+
+  // Build list of {openMin, closeMin} windows relevant to today
+  const windows = [];
+  for (const p of periods) {
+    if (!p.close) continue;
+    const oMin = pointToMinutes(p.open);
+    const cMin = pointToMinutes(p.close);
+
+    if (p.open.day === jsDay && p.close.day === jsDay) {
+      windows.push({ openMin: oMin, closeMin: cMin });
+    } else if (p.open.day === jsDay) {
+      // opens today, closes tomorrow
+      windows.push({ openMin: oMin, closeMin: 24 * 60 + cMin });
+    } else if (p.close.day === jsDay) {
+      // opened yesterday, closes today
+      windows.push({ openMin: -1, closeMin: cMin });
+    }
+  }
+
+  for (const w of windows) {
+    if (curMin >= w.openMin && curMin < w.closeMin) {
+      if (w.closeMin - curMin <= SOON_THRESHOLD_MIN) {
+        return {
+          todayText,
+          status: "Closing soon",
+          statusClass: "closing-soon",
+          nextOpen: null,
+        };
+      }
+      return { todayText, status: "Open", statusClass: "open", nextOpen: null };
+    }
+  }
+
+  // Not open — check if opening soon
+  for (const w of windows) {
+    if (w.openMin > curMin && w.openMin - curMin <= SOON_THRESHOLD_MIN) {
+      return {
+        todayText,
+        status: "Opening soon",
+        statusClass: "opening-soon",
+        nextOpen: null,
+      };
+    }
+  }
+
+  // Closed — if past all today's windows, find the next opening
+  const pastToday = windows.every((w) => w.closeMin <= curMin);
+  const nextOpen = pastToday ? findNextOpen(periods, jsDay) : null;
+
+  return { todayText, status: "Closed", statusClass: "closed", nextOpen };
+}
+
 /**
  * @param {object} shop
  * @param {(e: Event) => void} onBackdropClick
@@ -158,27 +300,26 @@ function buildGoogleBody(place) {
     );
   }
   if (place.opening_hours?.weekday_text?.length) {
-    const lines = place.opening_hours.weekday_text.map((line) =>
-      h("li", {}, [text(line)]),
+    const { todayText, status, statusClass, nextOpen } = getTodayHoursInfo(
+      place.opening_hours,
     );
-    parts.push(
-      h("div", { className: "shop-popup__hours" }, [
-        h("strong", {}, [text("Hours")]),
-        h("ul", {}, lines),
+    const badge = h(
+      "span",
+      { className: `shop-popup__status shop-popup__status--${statusClass}` },
+      [text(status)],
+    );
+    const hoursChildren = [
+      h("p", { className: "shop-popup__hours-today" }, [
+        badge,
+        text(` · Today: ${todayText}`),
       ]),
-    );
-  }
-  if (place.website) {
-    parts.push(
-      h("p", {}, [
-        h("a", {
-          href: place.website,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          textContent: "Website (Google)",
-        }),
-      ]),
-    );
+    ];
+    if (nextOpen) {
+      hoursChildren.push(
+        h("p", { className: "shop-popup__hours-next" }, [text(nextOpen)]),
+      );
+    }
+    parts.push(h("div", { className: "shop-popup__hours" }, hoursChildren));
   }
   if (place.url) {
     parts.push(

@@ -391,6 +391,48 @@ main {
   padding-left: 1.2rem;
 }
 
+.shop-popup__hours-today {
+  margin: 0 0 6px;
+  font-size: 0.9rem;
+}
+
+.shop-popup__hours-next {
+  margin: 2px 0 6px;
+  font-size: 0.82rem;
+  color: #6b4c30;
+  font-style: italic;
+}
+
+.shop-popup__status {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  vertical-align: baseline;
+}
+
+.shop-popup__status--open {
+  background: #d4edda;
+  color: #1b5e20;
+}
+
+.shop-popup__status--closed {
+  background: #f0d0d0;
+  color: #8b1a1a;
+}
+
+.shop-popup__status--opening-soon {
+  background: #fff3cd;
+  color: #7a5d00;
+}
+
+.shop-popup__status--closing-soon {
+  background: #fff3cd;
+  color: #7a5d00;
+}
+
 .shop-popup__loading,
 .shop-popup__muted {
   color: #666;

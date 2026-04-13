@@ -29,12 +29,32 @@ function displayNameToString(displayName) {
   return "";
 }
 
+function normalizePeriod(p) {
+  const entry = {};
+  if (p.open)
+    entry.open = { day: p.open.day, hour: p.open.hour, minute: p.open.minute };
+  if (p.close)
+    entry.close = {
+      day: p.close.day,
+      hour: p.close.hour,
+      minute: p.close.minute,
+    };
+  return entry;
+}
+
 function normalizePlaceForPopup(place) {
   const name = displayNameToString(place.displayName);
-  const weekdayDesc = place.regularOpeningHours?.weekdayDescriptions;
+  const roh = place.regularOpeningHours;
+  const weekdayDesc = roh?.weekdayDescriptions;
+  const rawPeriods = roh?.periods;
   const opening_hours =
     Array.isArray(weekdayDesc) && weekdayDesc.length > 0
-      ? { weekday_text: weekdayDesc }
+      ? {
+          weekday_text: weekdayDesc,
+          ...(Array.isArray(rawPeriods)
+            ? { periods: rawPeriods.map(normalizePeriod) }
+            : {}),
+        }
       : undefined;
 
   return {
