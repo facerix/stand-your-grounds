@@ -1,5 +1,5 @@
 // Service Worker for App - Development Version
-const VERSION = "1.0.1-dev";
+const VERSION = "1.0.4-dev";
 importScripts(`/sw-core.js?v=${VERSION}`);
 
 const cacheConfig = CacheConfig.create(VERSION);
@@ -80,15 +80,20 @@ self.addEventListener("fetch", (event) => {
   }
 
   event.respondWith(
-    ServiceWorkerCore.handleFetch(request, CACHE_NAMES, LOG_PREFIX).catch(
-      (error) => {
-        console.error(`${LOG_PREFIX} Fetch failed:`, error);
-        if (request.mode === "navigate") {
-          return caches.match("/");
-        }
-        throw error;
-      },
-    ),
+    // Network-first for HTML/CSS/JS so style and script edits show without hard refresh
+    ServiceWorkerCore.handleFetch(
+      request,
+      CACHE_NAMES,
+      LOG_PREFIX,
+      false,
+      true,
+    ).catch((error) => {
+      console.error(`${LOG_PREFIX} Fetch failed:`, error);
+      if (request.mode === "navigate") {
+        return caches.match("/");
+      }
+      throw error;
+    }),
   );
 });
 

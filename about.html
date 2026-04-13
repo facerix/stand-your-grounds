@@ -21,28 +21,38 @@
     <link rel="manifest" href="/site.webmanifest" />
 
     <style>
-      header {
-        h1 {
-          margin: 0;
-        }
-      }
-      body {
-        height: 100vh;
-        overflow-y: scroll;
+      .about-page__head {
+        height: auto;
+        min-height: 50px;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 0.25rem;
+        row-gap: 0.35rem;
       }
 
-      main {
+      .about-page__head h1 {
+        margin: 0;
+        margin-right: 0;
+        text-align: center;
+      }
+
+      .about-page {
+        overflow-y: auto;
+      }
+
+      .about-page main {
         flex-direction: column;
         padding: 3em 15vw;
-
         line-height: 1.75rem;
         text-align: justify;
       }
 
       details {
         margin: 2em auto 0;
-        width: 600px;
+        width: min(600px, 100%);
+        max-width: 100%;
         padding: 1em;
+        box-sizing: border-box;
         border: 1px solid #ccc;
         border-radius: 5px;
         background-color: #303030;
@@ -84,34 +94,96 @@
         }
       }
 
+      @media (max-width: 767px) {
+        .about-page__head {
+          align-items: center;
+          min-height: 48px;
+          row-gap: 0.5rem;
+          padding: max(8px, env(safe-area-inset-top, 0px))
+            max(10px, env(safe-area-inset-right, 0px)) 10px
+            max(10px, env(safe-area-inset-left, 0px));
+        }
+
+        .about-page__head a {
+          flex: 0 0 auto;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 44px;
+          min-height: 44px;
+        }
+
+        .about-page__head > img {
+          flex: 0 0 auto;
+        }
+
+        .about-page__head h1 {
+          flex: 1 1 100%;
+          margin: 0;
+          font-size: clamp(0.95rem, 4vw, 1.15rem);
+          line-height: 1.25;
+          order: 1;
+        }
+
+        .about-page__head a,
+        .about-page__head > img {
+          order: 0;
+        }
+
+        .about-page main {
+          text-align: start;
+          text-wrap: pretty;
+        }
+      }
+
       @media (max-width: 575px) {
-        main {
-          padding: 10px;
+        .about-page main {
+          padding: 12px 14px 1.5rem;
+        }
+
+        details p {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.5rem;
+          text-align: center;
+        }
+
+        details button {
+          margin-left: 0;
+          align-self: center;
+          width: 100%;
+          max-width: 20rem;
+        }
+
+        #clearCacheStatus {
+          margin-left: 0 !important;
+          display: block;
+          text-align: center;
         }
       }
 
       @media (min-width: 576px) {
-        main {
+        .about-page main {
           padding: 2em;
         }
       }
 
       @media (min-width: 768px) {
-        main {
+        .about-page main {
           padding: 4em;
         }
       }
 
       @media (min-width: 992px) {
-        main {
+        .about-page main {
           padding: 5em;
         }
       }
     </style>
   </head>
 
-  <body class="fill-height">
-    <header>
+  <body class="u-fill-height about-page">
+    <header class="about-page__head">
       <a href="/" title="Back to the map">
         <img
           class="invert"

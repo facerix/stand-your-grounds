@@ -35,9 +35,11 @@ const CSS = `
   dialog[open] {
     display: flex;
     flex-direction: column;
-    min-width: 30vw;
-    max-width: 480px;
-    width: 90vw;
+    min-width: 0;
+    max-width: min(480px, calc(100vw - 24px));
+    width: min(90vw, calc(100vw - 24px));
+    margin: auto;
+    box-sizing: border-box;
     padding: 0;
     border: 1px solid var(--confirmation-border);
     border-radius: 8px;
@@ -201,6 +203,22 @@ const CSS = `
     to {
       transform: translateY(0);
       opacity: 1;
+    }
+  }
+
+  @media (max-width: 420px) {
+    dialog[open] {
+      width: calc(100vw - 16px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+      max-width: none;
+    }
+
+    form .actions {
+      flex-direction: column-reverse;
+      align-items: stretch;
+    }
+
+    form .actions input {
+      width: 100%;
     }
   }
 }

@@ -316,6 +316,7 @@ const ServiceWorkerCore = {
     cacheNames,
     logPrefix = "[SW]",
     useNetworkFirstForHTML = false,
+    useNetworkFirstForRefreshable = false,
   ) {
     if (request.method !== "GET") {
       return fetch(request);
@@ -326,6 +327,10 @@ const ServiceWorkerCore = {
       cacheName = cacheNames.staticName;
     } else {
       cacheName = cacheNames.name;
+    }
+
+    if (useNetworkFirstForRefreshable && this.isRefreshableResource(request)) {
+      return this.networkFirst(request, cacheName, logPrefix);
     }
 
     if (useNetworkFirstForHTML && this.isHTMLResource(request)) {

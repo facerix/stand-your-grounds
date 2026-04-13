@@ -37,21 +37,38 @@ class UpdateNotification extends HTMLElement {
       <style>
         .update-notification {
           position: fixed;
-          top: 20px;
-          right: 20px;
-          background: linear-gradient(135deg, #7a7a7a 0%, #3a3a3a 50%, #5a5a5a 100%);
-          color: white;
+          top: max(12px, env(safe-area-inset-top, 0px));
+          right: max(12px, env(safe-area-inset-right, 0px));
+          left: auto;
+          background: linear-gradient(135deg, #4a3423 0%, #3d2914 50%, #5a3e28 100%);
+          color: #f5e6d3;
           padding: 15px;
           border-radius: 8px;
+          border: 1px solid #2ec6fe;
           box-shadow: 0 4px 12px rgba(0,0,0,0.3);
           z-index: 1000;
-          max-width: 300px;
+          max-width: min(300px, calc(100vw - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+          box-sizing: border-box;
           display: none;
+          font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+          font-style: normal;
+          font-variant: normal;
+        }
+
+        @media (max-width: 360px) {
+          .update-notification {
+            left: max(12px, env(safe-area-inset-left, 0px));
+            right: max(12px, env(safe-area-inset-right, 0px));
+            max-width: none;
+          }
         }
         
         .update-notification strong {
           display: block;
           margin-bottom: 8px;
+          font-family: Futura, "Century Gothic", "Trebuchet MS", "Segoe UI",
+            Roboto, Helvetica, Arial, sans-serif;
+          font-weight: 700;
         }
         
         .update-notification p {
@@ -59,8 +76,8 @@ class UpdateNotification extends HTMLElement {
         }
         
         .update-notification button {
-          background: white;
-          color: #5a5a5a;
+          background: #f0c96a;
+          color: #3d2914;
           border: none;
           padding: 8px 16px;
           border-radius: 4px;
@@ -68,10 +85,11 @@ class UpdateNotification extends HTMLElement {
           cursor: pointer;
           font-weight: bold;
           font-size: 14px;
+          font-family: inherit;
         }
         
         .update-notification button:hover:not(:disabled) {
-          background: #f0f0f0;
+          background: #e8bc55;
         }
         
         .update-notification button:active:not(:disabled) {
@@ -103,8 +121,8 @@ class UpdateNotification extends HTMLElement {
           display: inline-block;
           width: 16px;
           height: 16px;
-          border: 2px solid rgba(255, 255, 255, 0.3);
-          border-top-color: white;
+          border: 2px solid rgba(245, 230, 211, 0.3);
+          border-top-color: #f5e6d3;
           border-radius: 50%;
           animation: spin 0.8s linear infinite;
           vertical-align: middle;

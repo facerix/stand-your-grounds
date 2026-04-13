@@ -42,6 +42,9 @@
         gap: 0.75rem 1.25rem;
         padding: 1rem 1.25rem;
         border-bottom: 1px solid #ccc;
+        height: auto;
+        min-height: 48px;
+        box-sizing: border-box;
       }
 
       .manage-page__head h1 {
@@ -200,6 +203,25 @@
         margin-left: 0.5rem;
         font-size: 0.8125rem;
         color: #15803d;
+      }
+
+      @media (max-width: 480px) {
+        .manage-page__banner {
+          padding: 0.65rem 0.75rem;
+          font-size: 0.8125rem;
+        }
+
+        .manage-page__head {
+          padding: 0.75rem 1rem;
+        }
+
+        .manage-page__head h1 {
+          font-size: 1.1rem;
+        }
+
+        .manage-page__main {
+          padding: 0.75rem;
+        }
       }
     </style>
   </head>

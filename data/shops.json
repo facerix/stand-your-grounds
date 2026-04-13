@@ -147,7 +147,10 @@
     "summary": "",
     "values": [],
     "links": [
-      { "label": "sightglasscoffee.com", "url": "https://sightglasscoffee.com/" }
+      {
+        "label": "sightglasscoffee.com",
+        "url": "https://sightglasscoffee.com/"
+      }
     ]
   },
   {
@@ -159,7 +162,10 @@
     "summary": "",
     "values": [],
     "links": [
-      { "label": "sightglasscoffee.com", "url": "https://sightglasscoffee.com/" }
+      {
+        "label": "sightglasscoffee.com",
+        "url": "https://sightglasscoffee.com/"
+      }
     ]
   },
   {
@@ -171,7 +177,10 @@
     "summary": "",
     "values": [],
     "links": [
-      { "label": "sightglasscoffee.com", "url": "https://sightglasscoffee.com/" }
+      {
+        "label": "sightglasscoffee.com",
+        "url": "https://sightglasscoffee.com/"
+      }
     ]
   }
 ]
