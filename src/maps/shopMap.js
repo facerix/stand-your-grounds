@@ -1,9 +1,29 @@
+import { h } from "/src/domUtils.js";
 import { loadMapsScript } from "/src/maps/loadMapsScript.js";
 import { PlaceDetailsCache } from "/src/maps/placeDetailsCache.js";
 import { hideShopPopup, openShopPopup } from "/src/maps/shopPopup.js";
 
 const DEFAULT_CENTER = { lat: 37.75, lng: -122.35 };
 const DEFAULT_ZOOM = 10;
+const NEARBY_ZOOM = 16;
+const GEO_TIMEOUT_MS = 12_000;
+
+/**
+ * @param {GeolocationPositionError} err
+ * @returns {string}
+ */
+function geolocationErrorMessage(err) {
+  switch (err.code) {
+    case err.PERMISSION_DENIED:
+      return "Location permission denied. Allow location for this site to see what’s nearby.";
+    case err.POSITION_UNAVAILABLE:
+      return "Your position could not be determined. Try again in a moment.";
+    case err.TIMEOUT:
+      return "Location request timed out. Try again.";
+    default:
+      return "Could not get your location. Try again.";
+  }
+}
 
 /**
  * @param {unknown} data
@@ -37,6 +57,14 @@ export async function initShopMap({ apiKey }) {
   if (!popupEl || !(popupEl instanceof HTMLElement)) {
     throw new Error("#shop-popup element missing");
   }
+
+  const mapApp = mapEl.parentElement;
+  if (!mapApp) {
+    throw new Error("#map has no parent");
+  }
+  const mapShell = h("div", { className: "map-app__map-shell" });
+  mapApp.insertBefore(mapShell, mapEl);
+  mapShell.appendChild(mapEl);
 
   const shopsRes = await fetch("/data/shops.json");
   if (!shopsRes.ok) {
@@ -78,6 +106,92 @@ export async function initShopMap({ apiKey }) {
       void openShopPopup({ container: popupEl, shop, placeCache });
     });
   });
+
+  /** @type {google.maps.marker.AdvancedMarkerElement | null} */
+  let userMarker = null;
+
+  /**
+   * @param {{ lat: number, lng: number }} latLng
+   */
+  function showUserNearby(latLng) {
+    map.panTo(latLng);
+    map.setZoom(NEARBY_ZOOM);
+    hideShopPopup(popupEl);
+    if (!userMarker) {
+      const pin = new google.maps.marker.PinElement({
+        background: "#1a73e8",
+        borderColor: "#1557b0",
+        glyphColor: "#ffffff",
+      });
+      userMarker = new google.maps.marker.AdvancedMarkerElement({
+        map,
+        position: latLng,
+        content: pin.element,
+        title: "Your location",
+        zIndex: 1000,
+      });
+    } else {
+      userMarker.position = latLng;
+    }
+  }
+
+  const geoStatus = h("div", {
+    className: "map-app__geo-status u-hidden",
+    role: "status",
+    ariaLive: "polite",
+  });
+  const nearbyBtn = h(
+    "button",
+    {
+      type: "button",
+      className: "btn map-app__nearby-btn",
+      textContent: "📍 What’s nearby?",
+      title: navigator.geolocation
+        ? "Use your device location to center the map on shops near you"
+        : "Geolocation is not available in this browser",
+    },
+    [],
+  );
+
+  nearbyBtn.addEventListener("click", () => {
+    if (!navigator.geolocation) {
+      geoStatus.textContent =
+        "Your browser does not support geolocation, or it is turned off.";
+      geoStatus.classList.remove("u-hidden");
+      return;
+    }
+    hideShopPopup(popupEl);
+    geoStatus.classList.add("u-hidden");
+    nearbyBtn.disabled = true;
+    nearbyBtn.setAttribute("aria-busy", "true");
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        nearbyBtn.disabled = false;
+        nearbyBtn.removeAttribute("aria-busy");
+        showUserNearby({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        });
+      },
+      (err) => {
+        nearbyBtn.disabled = false;
+        nearbyBtn.removeAttribute("aria-busy");
+        geoStatus.textContent = geolocationErrorMessage(err);
+        geoStatus.classList.remove("u-hidden");
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 60_000,
+        timeout: GEO_TIMEOUT_MS,
+      },
+    );
+  });
+
+  const nearbyWrap = h("div", { className: "map-app__nearby-wrap" }, [
+    nearbyBtn,
+    geoStatus,
+  ]);
+  mapShell.appendChild(nearbyWrap);
 
   map.addListener("click", () => {
     hideShopPopup(popupEl);
