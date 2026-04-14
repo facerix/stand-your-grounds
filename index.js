@@ -5,6 +5,7 @@ import DataStore from "/src/DataStore.js";
 import { serviceWorkerManager } from "/src/ServiceWorkerManager.js";
 
 const whenLoaded = Promise.all([
+  customElements.whenDefined("burger-menu"),
   customElements.whenDefined("update-notification"),
 ]);
 
