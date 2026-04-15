@@ -1,21 +1,71 @@
+export const CATEGORIES = [
+  { key: "ownership", label: "Ownership & Community Roots", icon: "🏛️" },
+  { key: "safety", label: "Safety & Physical Inclusion", icon: "🛡️" },
+  { key: "ethics", label: "Global & Labor Ethics", icon: "🌍" },
+  { key: "dietary", label: "Inclusive Dietary Needs", icon: "🍽️" },
+];
+
 export const VALUES = [
-  { label: "🏳️‍🌈 LGBTQ+ Friendly", value: "lgbtq_friendly" },
-  { label: "👩‍💼 Women-Owned", value: "women_owned" },
-  { label: "👥 Minority-Owned", value: "minority_owned" },
-  { label: "🧑‍🦯 Disabled-Owned", value: "disabled_owned" },
-  { label: "🇺🇸 Veteran-Owned", value: "veteran_owned" },
-  { label: "🏢 Small Business", value: "small_business" },
-  { label: "🏢 Non-Profit", value: "non_profit" },
-  { label: "🏢 Community-Owned", value: "community_owned" },
-  { label: "👷 Fair Labor", value: "fair_labor" },
-  { label: "🌍 Fair Trade", value: "fair_trade" },
-  { label: "🥬 Vegan Friendly", value: "vegan_friendly" },
-  { label: "🌍 Direct Trade", value: "direct_trade" },
-  { label: "🏢 Locally Owned", value: "locally_owned" },
-  { label: "🏢 B Corp", value: "b_corp" },
-  { label: "🥬 Vegetarian Friendly", value: "vegetarian_friendly" },
-  { label: "🥜 Gluten Free", value: "gluten_free" },
-  { label: "🥓 Kosher", value: "kosher" },
-  { label: "🍗 Halal", value: "halal" },
-  { label: "🌿 Organic", value: "organic" },
+  { label: "BIPOC-Owned ✊", value: "bipoc_owned", category: "ownership" },
+  { label: "Women-Owned 👩‍💼", value: "women_owned", category: "ownership" },
+  {
+    label: "LGBTQ+ Owned 🏳️‍🌈",
+    value: "lgbtq_owned",
+    category: "ownership",
+  },
+  { label: "Immigrant-Led 🤲", value: "immigrant_led", category: "ownership" },
+  { label: "Worker-Owned 🤝", value: "worker_owned", category: "ownership" },
+  {
+    label: "Independently Owned 🏠",
+    value: "independently_owned",
+    category: "ownership",
+  },
+  {
+    label: "Social Enterprise / Non-Profit 🏢",
+    value: "social_enterprise",
+    category: "ownership",
+  },
+
+  {
+    label: "Gender-Neutral Restrooms ⚧️",
+    value: "gender_neutral_restrooms",
+    category: "safety",
+  },
+  {
+    label: "Universal Accessibility ♿",
+    value: "universal_accessibility",
+    category: "safety",
+  },
+  {
+    label: "Neuro-Inclusive / Low-Sensory 🧠",
+    value: "neuro_inclusive",
+    category: "safety",
+  },
+  {
+    label: "ASL / Non-Verbal Friendly 🤟",
+    value: "asl_friendly",
+    category: "safety",
+  },
+  {
+    label: "Trauma-Informed Space 🛡️",
+    value: "trauma_informed",
+    category: "safety",
+  },
+
+  {
+    label: "Living Wage / No-Tip ⚖️",
+    value: "living_wage",
+    category: "ethics",
+  },
+  { label: "Direct Trade 🌍", value: "direct_trade", category: "ethics" },
+  {
+    label: "Eco-Friendly / Zero-Waste ♻️",
+    value: "eco_friendly",
+    category: "ethics",
+  },
+
+  { label: "Halal 🌙", value: "halal", category: "dietary" },
+  { label: "Kosher ✡️", value: "kosher", category: "dietary" },
+  { label: "Vegan Friendly 🥬", value: "vegan_friendly", category: "dietary" },
+  { label: "Gluten-Free 🥜", value: "gluten_free", category: "dietary" },
 ];

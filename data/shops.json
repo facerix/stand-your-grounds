@@ -6,7 +6,7 @@
     "lng": -122.4287,
     "placeId": "ChIJfeCRkBR-j4AR_hD9mE9Chtw",
     "summary": "Original location of Martha & Bros. Coffee Co., a family-owned coffee shop in Noe Valley.",
-    "values": ["locally_owned", "small_business"],
+    "values": ["independently_owned"],
     "links": [
       {
         "label": "marthabros.com",
@@ -21,7 +21,7 @@
     "lng": -122.4267647,
     "placeId": "ChIJu0OEKmp-j4AR18iMt8X_GtE",
     "summary": "Church Street location of a local family-owned coffee shop.",
-    "values": ["locally_owned", "small_business"],
+    "values": ["independently_owned"],
     "links": [
       {
         "label": "marthabros.com",
@@ -36,7 +36,7 @@
     "lng": -122.4173796,
     "placeId": "ChIJG4BfvVl-j4ARigns2HVOXOM",
     "summary": "Bernal Heights location of a local family-owned coffee shop.",
-    "values": ["b_corp", "locally_owned"],
+    "values": ["independently_owned"],
     "links": [
       {
         "label": "marthabros.com",
@@ -50,17 +50,42 @@
     "lat": 37.7436575,
     "lng": -122.4290966,
     "placeId": "ChIJ2WqlLZR_j4ARjKmH5t32AXw",
-    "summary": "Cozy neighborhood coffee shop on a slow street. Good coffee, tasty bites, chill vibes.",
-    "values": [
-      "lgbtq_friendly",
-      "locally_owned",
-      "small_business",
-      "vegetarian_friendly"
-    ],
+    "summary": "Cozy neighborhood coffee shop on a slow street, serving Sightglass coffee, Neighbor Bakehouse pastries, and chill vibes.",
+    "values": ["lgbtq_owned", "women_owned", "independently_owned"],
     "links": [
       {
         "label": "@laluchacoffee",
         "url": "https://www.instagram.com/laluchacoffee/"
+      }
+    ]
+  },
+  {
+    "id": "noe-cafe",
+    "name": "Noe Cafe",
+    "lat": 37.7485034,
+    "lng": -122.4292159,
+    "placeId": "ChIJGzD_VaV_j4ARXsfoRJmwqn8",
+    "summary": "Popular community space on a slow steet in Noe Valley. Also serves empanadas and other small bites.",
+    "values": ["independently_owned", "women_owned"],
+    "links": [
+      {
+        "label": "noecafe.com",
+        "url": "http://noecafe.com/"
+      }
+    ]
+  },
+  {
+    "id": "noe-cafe-dogpatch",
+    "name": "Noe Cafe - Dogpatch",
+    "lat": 37.762941,
+    "lng": -122.3889756,
+    "placeId": "ChIJYVhXPjN_j4ARNoBIRvinMxc",
+    "summary": "Dogpatch location of Noe Cafe, serving empanadas and other lunch bites.",
+    "values": ["independently_owned", "women_owned"],
+    "links": [
+      {
+        "label": "noecafe.com",
+        "url": "http://noecafe.com/"
       }
     ]
   },
@@ -71,7 +96,7 @@
     "lng": -122.4352428,
     "placeId": "ChIJIwGPyxp-j4ARaAv8glHW8q4",
     "summary": "Eco-friendly, gay-owned neighborhood coffee shop with outdoor seating & an assortment of baked goods.",
-    "values": ["lgbtq_friendly", "locally_owned", "small_business"],
+    "values": ["lgbtq_owned", "independently_owned"],
     "links": [
       { "label": "spikescoffee.com", "url": "https://spikescoffee.com/" }
     ]
@@ -152,8 +177,20 @@
     "lat": 37.7696901,
     "lng": -122.4534936,
     "placeId": "ChIJdam9at-HhYAReFFog6hjhdo",
-    "summary": "",
-    "values": [],
+    "summary": "Run by a 1st-generation Nicaraguan-American family with deep roots in the community.",
+    "values": ["independently_owned", "immigrant_led", "direct_trade"],
+    "links": [
+      { "label": "flywheelcoffee.com", "url": "https://flywheelcoffee.com/" }
+    ]
+  },
+  {
+    "id": "flywheel-coffee",
+    "name": "Flywheel Coffee",
+    "lat": 37.791458299999995,
+    "lng": -122.3994766,
+    "placeId": "ChIJI3AzXACBhYAR6AFz2gfipFI",
+    "summary": "Family-owned shop in heart of the FiDi. Philz who?",
+    "values": ["independently_owned", "immigrant_led", "direct_trade"],
     "links": [
       { "label": "flywheelcoffee.com", "url": "https://flywheelcoffee.com/" }
     ]
@@ -164,8 +201,8 @@
     "lat": 37.7592345,
     "lng": -122.41131709999998,
     "placeId": "ChIJH3-XPzd-j4ARxc5pUq9X8CU",
-    "summary": "",
-    "values": [],
+    "summary": "Cozy espresso bar with an on-site roaster.",
+    "values": ["direct_trade", "independently_owned"],
     "links": [
       {
         "label": "sightglasscoffee.com",
@@ -179,8 +216,8 @@
     "lat": 37.7770356,
     "lng": -122.40845429999997,
     "placeId": "ChIJf-V9OIKAhYARu8bBG2S6RME",
-    "summary": "",
-    "values": [],
+    "summary": "Community space in the heart of SoMa, open coffee bar and on-site roaster.",
+    "values": ["direct_trade", "independently_owned"],
     "links": [
       {
         "label": "sightglasscoffee.com",
@@ -194,8 +231,8 @@
     "lat": 37.772317199999996,
     "lng": -122.43748769999999,
     "placeId": "ChIJ0ZnTPK-AhYARbVoaoZLrzv8",
-    "summary": "",
-    "values": [],
+    "summary": "Hip shop in an old Victorian with tons of natural light. Pour-over, espresso, and cold drinks on tap.",
+    "values": ["direct_trade", "independently_owned"],
     "links": [
       {
         "label": "sightglasscoffee.com",

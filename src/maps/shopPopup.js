@@ -1,8 +1,10 @@
 import { h } from "/src/domUtils.js";
-import { VALUES } from "/src/values.js";
+import { VALUES, CATEGORIES } from "/src/values.js";
 import DataStore from "/src/DataStore.js";
 
 const valueLabelMap = new Map(VALUES.map((v) => [v.value, v.label]));
+const valueCategoryMap = new Map(VALUES.map((v) => [v.value, v.category]));
+const categoryOrder = CATEGORIES.map((c) => c.key);
 
 /** @param {string} s */
 function text(s) {
@@ -223,18 +225,31 @@ function buildFavoriteButton(shopId) {
  */
 function buildCuratedSection(shop, onBackdropClick, onClose) {
   const titleId = "shop-popup-title";
-  const values =
-    Array.isArray(shop.values) && shop.values.length > 0
-      ? h(
-          "ul",
-          { className: "shop-popup__values" },
-          shop.values.map((v) =>
-            h("li", { className: "shop-popup__value" }, [
-              text(valueLabelMap.get(v) || String(v)),
-            ]),
-          ),
-        )
-      : null;
+  let values = null;
+  if (Array.isArray(shop.values) && shop.values.length > 0) {
+    const grouped = new Map();
+    for (const v of shop.values) {
+      const cat = valueCategoryMap.get(v) || "other";
+      if (!grouped.has(cat)) grouped.set(cat, []);
+      grouped.get(cat).push(v);
+    }
+    const groupEls = [];
+    for (const catKey of categoryOrder) {
+      const vals = grouped.get(catKey);
+      if (!vals) continue;
+      const pills = vals.map((v) => {
+        const li = h("li", { className: "shop-popup__value" }, [
+          text(valueLabelMap.get(v) || String(v)),
+        ]);
+        li.dataset.category = catKey;
+        return li;
+      });
+      groupEls.push(h("ul", { className: "shop-popup__value-group" }, pills));
+    }
+    if (groupEls.length > 0) {
+      values = h("div", { className: "shop-popup__values" }, groupEls);
+    }
+  }
 
   const validLinks = Array.isArray(shop.links)
     ? shop.links.filter((link) => link?.url)

@@ -377,19 +377,43 @@ main {
 
 .shop-popup__values {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 6px;
   margin: 0 0 10px;
+  font-size: 0.8125rem;
+}
+
+.shop-popup__value-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.8125rem;
 }
 
 .shop-popup__value {
   padding: 2px 8px;
   border-radius: 4px;
+  border-left: 3px solid var(--clr-accent-bg, #f0ebe3);
   background: var(--clr-accent-bg, #f0ebe3);
   white-space: nowrap;
+}
+
+.shop-popup__value[data-category="ownership"] {
+  border-left-color: #c8872a;
+}
+
+.shop-popup__value[data-category="safety"] {
+  border-left-color: #2a9d8f;
+}
+
+.shop-popup__value[data-category="ethics"] {
+  border-left-color: #457b9d;
+}
+
+.shop-popup__value[data-category="dietary"] {
+  border-left-color: #9b5de5;
 }
 
 .shop-popup__links {
