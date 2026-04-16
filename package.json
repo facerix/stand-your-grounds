@@ -6,8 +6,8 @@
   "main": "index.html",
   "scripts": {
     "start": "live-server --no-browser --port=3000",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "populate": "node scripts/populate-shop-data.js --dry-run",
@@ -16,9 +16,7 @@
   "author": "Rylee Corradini",
   "license": "GPL-3.0",
   "devDependencies": {
-    "eslint": "^9.0.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.1.0",
+    "oxlint": "^1.60.0",
     "live-server": "^1.2.2",
     "prettier": "^3.0.0"
   }

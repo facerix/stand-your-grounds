@@ -80,7 +80,7 @@ Features:
 
 ### 9. Development Tools
 
-- **ESLint** - Code linting (Personnel pattern)
+- **oxlint** - Code linting (Personnel pattern)
 - **Prettier** - Code formatting
 - **live-server** - Development server
 
@@ -189,7 +189,7 @@ git commit -m "Initial commit from facerix-template"
 
 ### From Personnel (Most Complete)
 
-- ESLint + Prettier configuration
+- oxlint + Prettier configuration
 - Comprehensive ServiceWorkerManager
 - Multi-cache service worker strategy
 - Update notification with progress
