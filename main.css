@@ -777,6 +777,12 @@ dialog::backdrop {
 /* web component placeholders */
 update-notification {
   display: none;
+  --update-notification-bg: linear-gradient(135deg, #4a3423 0%, #3d2914 50%, #5a3e28 100%);
+  --update-notification-color: #f5e6d3;
+  --update-notification-border: #2ec6fe;
+  --update-notification-btn-bg: #f0c96a;
+  --update-notification-btn-color: #3d2914;
+  --update-notification-btn-hover: #e8bc55;
 }
 
 /* view transitions */

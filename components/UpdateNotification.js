@@ -35,16 +35,25 @@ class UpdateNotification extends HTMLElement {
   render() {
     this.shadowRoot.innerHTML = `
       <style>
+        :host {
+          --update-notification-bg: linear-gradient(135deg, #7a7a7a 0%, #3a3a3a 50%, #5a5a5a 100%);
+          --update-notification-color: white;
+          --update-notification-border: transparent;
+          --update-notification-btn-bg: white;
+          --update-notification-btn-color: #5a5a5a;
+          --update-notification-btn-hover: #f0f0f0;
+        }
+
         .update-notification {
           position: fixed;
           top: max(12px, env(safe-area-inset-top, 0px));
           right: max(12px, env(safe-area-inset-right, 0px));
           left: auto;
-          background: linear-gradient(135deg, #4a3423 0%, #3d2914 50%, #5a3e28 100%);
-          color: #f5e6d3;
+          background: var(--update-notification-bg);
+          color: var(--update-notification-color);
           padding: 15px;
           border-radius: 8px;
-          border: 1px solid #2ec6fe;
+          border: 1px solid var(--update-notification-border);
           box-shadow: 0 4px 12px rgba(0,0,0,0.3);
           z-index: 1000;
           max-width: min(300px, calc(100vw - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
@@ -76,8 +85,8 @@ class UpdateNotification extends HTMLElement {
         }
         
         .update-notification button {
-          background: #f0c96a;
-          color: #3d2914;
+          background: var(--update-notification-btn-bg);
+          color: var(--update-notification-btn-color);
           border: none;
           padding: 8px 16px;
           border-radius: 4px;
@@ -89,7 +98,7 @@ class UpdateNotification extends HTMLElement {
         }
         
         .update-notification button:hover:not(:disabled) {
-          background: #e8bc55;
+          background: var(--update-notification-btn-hover);
         }
         
         .update-notification button:active:not(:disabled) {
@@ -121,8 +130,8 @@ class UpdateNotification extends HTMLElement {
           display: inline-block;
           width: 16px;
           height: 16px;
-          border: 2px solid rgba(245, 230, 211, 0.3);
-          border-top-color: #f5e6d3;
+          border: 2px solid color-mix(in srgb, var(--update-notification-color) 30%, transparent);
+          border-top-color: var(--update-notification-color);
           border-radius: 50%;
           animation: spin 0.8s linear infinite;
           vertical-align: middle;
