@@ -75,17 +75,32 @@
     ]
   },
   {
-    "id": "noe-cafe-dogpatch",
-    "name": "Noe Cafe - Dogpatch",
-    "lat": 37.762941,
-    "lng": -122.3889756,
-    "placeId": "ChIJYVhXPjN_j4ARNoBIRvinMxc",
-    "summary": "Dogpatch location of Noe Cafe, serving empanadas and other lunch bites.",
-    "values": ["independently_owned", "women_owned"],
+    "id": "upfordayz-mission",
+    "name": "Up For Dayz - Valencia",
+    "lat": 37.7538522,
+    "lng": -122.423589,
+    "placeId": "ChIJpVECRh9_j4ARfe-h1uPKEE0",
+    "summary": "Original location, serving coffee drinks, freshly made juices, and breakfast bites.",
+    "values": ["independently_owned", "immigrant_led"],
     "links": [
       {
-        "label": "noecafe.com",
-        "url": "http://noecafe.com/"
+        "label": "upfordayz.com",
+        "url": "https://www.upfordayz.com/"
+      }
+    ]
+  },
+  {
+    "id": "upfordayz-polk",
+    "name": "Up For Dayz - Polk Gulch",
+    "lat": 37.7947377,
+    "lng": -122.4269414,
+    "placeId": "ChIJt6DRmUGBhYARa1ggXAewH-c",
+    "summary": "Polk Gulch location, serves breakfast bagels, salads, avocado toasts, coffee and fresh juices.",
+    "values": ["independently_owned", "immigrant_led"],
+    "links": [
+      {
+        "label": "upfordayz.com",
+        "url": "https://www.upfordayz.com/"
       }
     ]
   },
